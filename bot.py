@@ -13,7 +13,6 @@ load_dotenv(dotenv_path=env_path)
 app = Flask(__name__)
 
 slack_event_adapter = SlackEventAdapter('8f57d4585beb8feaf5f5876d536930a9', '/slack/events', app)
-
 client = slack.WebClient(token='xoxb-4152885456631-4169299575394-qgBStFyvafuhOOUcqDp2gRqB')
 client.chat_postMessage(channel='#svf-slack-bot', text='Testing again')
 
@@ -32,8 +31,15 @@ def message(payload):
     channel_id = event.get('channel')
     user_id = event.get('user')
     text = event.get('text')
+    msg_arr = text.split()
 
-    if BOT_ID != user_id:
+    # event must be coming from the proper channel
+    if channel_id != '#svf-slack-bot' or BOT_ID == user_id:
+        return
+
+    # check if the message is prompting the bot or not
+    if msg_arr[0] == "!intern":
+        # TODO: Do something with the remainder of the message
         client.chat_postMessage(channel=channel_id, text=text)  # echoes the message sent to the bot
 
 """
@@ -49,13 +55,6 @@ def get_random():
     rand = random.random()
 
     client.chat_postMessage(channel=channel_id, text=f'@{user_id}, your random number is {rand}.')
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)  # default port 5000, debug = if we modify, flask will auto-modify the deployed file
