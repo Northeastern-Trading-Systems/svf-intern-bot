@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 from flask import Flask, request
 from slackeventsapi import SlackEventAdapter
 from commands import *
-from waitress import serve
 
 env_path = Path('.') / 'env'  # denotes where path for the file is so we can load it
 load_dotenv(dotenv_path=env_path)
@@ -68,6 +67,3 @@ def get_random():
     rand = random.random()
 
     client.chat_postMessage(channel=channel_id, text=f'@{user_id}, your random number is {rand}.')
-
-if __name__ == '__main__':
-    serve(app, listen='*:8080') 
