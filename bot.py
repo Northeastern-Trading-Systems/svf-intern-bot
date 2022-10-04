@@ -6,6 +6,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from flask import Flask, request
 from slackeventsapi import SlackEventAdapter
+from commands import *
 
 env_path = Path('.') / 'env'  # denotes where path for the file is so we can load it
 load_dotenv(dotenv_path=env_path)
@@ -13,7 +14,7 @@ load_dotenv(dotenv_path=env_path)
 app = Flask(__name__)
 
 slack_event_adapter = SlackEventAdapter('8f57d4585beb8feaf5f5876d536930a9', '/slack/events', app)
-client = slack.WebClient(token='xoxb-4152885456631-4169299575394-1ryy3FjrDagrLlZAX5nCGeRr')
+client = slack.WebClient(token='xoxb-4152885456631-4169299575394-CnON8SWzNrnZQVzoz4B1PjaX')
 client.chat_postMessage(channel='#svf-slack-bot', text='Testing again')
 
 """
@@ -33,14 +34,25 @@ def message(payload):
     text = event.get('text')
     msg_arr = text.split()
 
-    # event must be coming from the proper channel
-    if channel_id != '#svf-slack-bot' or BOT_ID == user_id:
-        return
+    if BOT_ID != user_id:
+        if msg_arr[0] == "!intern":
+            try:
+                command = Command(msg_arr[1:])
+                response_text = command.get_result()
+                client.chat_postMessage(channel=channel_id, text=response_text)
+            except ValueError as e:
+                client.chat_postMessage(channel=channel_id, text=str(e))
 
-    # check if the message is prompting the bot or not
-    if msg_arr[0] == "!intern":
-        # TODO: Do something with the remainder of the message
-        client.chat_postMessage(channel=channel_id, text=text)  # echoes the message sent to the bot
+        
+
+    # # event must be coming from the proper channel
+    # if channel_id != '#svf-slack-bot' or BOT_ID == user_id:
+    #     return
+
+    # # check if the message is prompting the bot or not
+    # if msg_arr[0] == "!intern":
+    #     # TODO: Do something with the remainder of the message
+    #     client.chat_postMessage(channel=channel_id, text=text)  # echoes the message sent to the bot
 
 """
 Command method:
