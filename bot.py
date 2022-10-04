@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 from flask import Flask, request
 from slackeventsapi import SlackEventAdapter
 
-
 env_path = Path('.') / 'env'  # denotes where path for the file is so we can load it
 load_dotenv(dotenv_path=env_path)
 
@@ -18,7 +17,7 @@ slack_event_adapter = SlackEventAdapter('3cc5f9d50eeb60a27396f344565d1b9f', '/sl
 
 # token concealed from github
 # client = slack.WebClient(token=os.environ['SLACK_TOKEN'])
-client = slack.WebClient(token='xoxb-4152885456631-4167497398114-Vcfc7urbc0GZ0QfAMstskDfJ')
+client = slack.WebClient(token='xoxb-4152885456631-4167497398114-IDCLJcJnTEU2IPr2IB15R1T0')
 BOT_ID = client.api_call('auth.test')['user_id']  # obtains the id of the bot
 
 """
