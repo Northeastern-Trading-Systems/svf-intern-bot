@@ -31,7 +31,7 @@ load_dotenv(dotenv_path=env_path)
 app = Flask(__name__)
 
 slack_event_adapter = SlackEventAdapter('8f57d4585beb8feaf5f5876d536930a9', '/slack/events', app)
-client = slack.WebClient(token='xoxb-4152885456631-4169299575394-CnON8SWzNrnZQVzoz4B1PjaX')
+client = slack.WebClient(token=os.environ['TOKEN_ID'])
 client.chat_postMessage(channel='#svf-slack-bot', text='Testing again')
 
 """
