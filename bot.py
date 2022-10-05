@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 from flask import Flask, request
 from slackeventsapi import SlackEventAdapter
 from commands import *
+import threading
+import requests
 
 env_path = Path('.') / 'env'  # denotes where path for the file is so we can load it
 load_dotenv(dotenv_path=env_path)
@@ -34,16 +36,24 @@ def message(payload):
     text = event.get('text')
     msg_arr = text.split()
 
+    slack_request = request.form
+
+    processor = threading.Thread(
+        target=process_event,
+        args=(slack_request,channel_id,user_id,msg_arr,)
+        )
+    processor.start()
+    return "Preparing chat response... please wait"
+
+def process_event(slack_request, channel_id, user_id, msg_arr):
     if BOT_ID != user_id:
         if msg_arr[0] == "!intern":
             try:
                 command = Command(msg_arr[1:])
-                response_text = command.get_result()
+                response_text = command.apply(msg_arr[2:])
                 client.chat_postMessage(channel=channel_id, text=response_text)
             except ValueError as e:
                 client.chat_postMessage(channel=channel_id, text=str(e))
-
-        
 
     # # event must be coming from the proper channel
     # if channel_id != '#svf-slack-bot' or BOT_ID == user_id:
