@@ -9,5 +9,8 @@ class Price_Target:
         self.ticker = ticker
 
     def execute(self):
-        # TODO: GET CHART FROM OPENBB
-        return
+        try:
+            result = str(openbb.stocks.dd.pt(self.ticker))
+            return result
+        except IndexError as e:
+            raise ValueError("Please provide a symbol for price target history, e.g. <!intern pt AAPL>")

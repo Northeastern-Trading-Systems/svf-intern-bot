@@ -9,5 +9,8 @@ class Analyst_Recommendations:
         self.ticker = ticker
 
     def execute(self):
-        # TODO: GET RECS FROM OPENBB
-        return
+        try:
+            result = str(openbb.stocks.dd.analyst(self.ticker))
+            return result
+        except IndexError as e:
+            raise ValueError("Please provide a symbol for analyst recommendations, e.g. <!intern analyst AAPL>")

@@ -9,5 +9,8 @@ class Inst_Holdings:
         self.ticker = ticker
 
     def execute(self):
-        # TODO: GET IH FROM OPENBB
-        return
+        try:
+            result = "Command not yet supported..."
+            return result
+        except IndexError as e:
+            raise ValueError("Please provide a symbol for price target history, e.g. <!intern pt AAPL>")

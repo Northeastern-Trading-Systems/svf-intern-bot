@@ -9,5 +9,8 @@ class Insiders:
         self.ticker = ticker
 
     def execute(self):
-        # TODO: GET TA FROM OPENBB
-        return
+        try:
+            result = str(openbb.stocks.ins.stats(self.ticker))
+            return result
+        except IndexError as e:
+            raise ValueError("Please provide a symbol for insider holdings, e.g. <!intern pt AAPL>")

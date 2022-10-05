@@ -19,7 +19,7 @@ from commands.insiders import Insiders
 from commands.inst_holdings import Inst_Holdings
 from commands.menu import Menu
 from commands.news import News
-from commands.next_er_date import Next_ER_Date
+from commands.overview import Overview
 from commands.portfolio_holdings import Portfolio_Holdings
 from commands.price_target import Price_Target
 from commands.quote import Quote
@@ -55,7 +55,7 @@ known_commands = {
     'dcf': lambda arr: DCF(*arr),
     'inst-holdings': lambda arr: Inst_Holdings(*arr),
     'insiders': lambda arr: Insiders(*arr),
-    'next-er': lambda arr: Next_ER_Date(*arr),
+    'overview': lambda arr: Overview(*arr),
     'er': lambda arr: ER_Info(*arr),
     'er-impl-move': lambda arr: ER_Implied_Move(*arr),
     'analyst': lambda arr: Analyst_Recommendations(*arr),

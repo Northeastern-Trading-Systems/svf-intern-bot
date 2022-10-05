@@ -1,8 +1,8 @@
 """
 Examples:
-er AAPL
+analysis AAPL
 """
-class ER_Info:
+class Analysis:
     ticker: str
 
     def __init__(self, ticker):
@@ -10,7 +10,7 @@ class ER_Info:
 
     def execute(self):
         try:
-            result = "Command not yet supported..."
+            result = str(openbb.stocks.fa.analyst(self.ticker))
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for price target history, e.g. <!intern pt AAPL>")
+            raise ValueError("Please provide a symbol for analysis, e.g. <!intern analyst AAPL>")

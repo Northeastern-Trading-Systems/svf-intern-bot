@@ -10,5 +10,8 @@ class News:
         self.ticker = ticker
 
     def execute(self):
-        # TODO: GET NEWS FROM OPENBB
-        return
+        try:
+            result = str(openbb.stocks.news(self.ticker))
+            return result
+        except IndexError as e:
+            raise ValueError("Please provide a symbol for news, e.g. <!intern pt AAPL>")

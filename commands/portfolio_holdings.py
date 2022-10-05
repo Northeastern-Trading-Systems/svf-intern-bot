@@ -7,7 +7,7 @@ class Portfolio_Holdings:
 
     def __init__(self):
         # TODO: Get Holdings and make into a DF or str
-        self.holdings = "Waiting for info from Varun..."
+        self.holdings = "We're broke ash lmao"
 
     def execute(self):
         return self.holdings
