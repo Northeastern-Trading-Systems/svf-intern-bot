@@ -10,13 +10,28 @@ from commands import *
 import threading
 import requests
 
+from commands.analyst_recommendations import Analyst_Recommendations
+from commands.dcf import DCF
+from commands.er_implied_move import ER_Implied_Move
+from commands.er_info import ER_Info
+from commands.heatmap import Heatmap
+from commands.insiders import Insiders
+from commands.inst_holdings import Inst_Holdings
+from commands.menu import Menu
+from commands.news import News
+from commands.next_er_date import Next_ER_Date
+from commands.portfolio_holdings import Portfolio_Holdings
+from commands.price_target import Price_Target
+from commands.quote import Quote
+from commands.technical_analysis import Technical_Analysis
+
 env_path = Path('.') / 'env'  # denotes where path for the file is so we can load it
 load_dotenv(dotenv_path=env_path)
 
 app = Flask(__name__)
 
 slack_event_adapter = SlackEventAdapter('8f57d4585beb8feaf5f5876d536930a9', '/slack/events', app)
-client = slack.WebClient(token=os.environ['TOKEN_ID'])
+client = slack.WebClient(token='xoxb-4152885456631-4169299575394-CnON8SWzNrnZQVzoz4B1PjaX')
 client.chat_postMessage(channel='#svf-slack-bot', text='Testing again')
 
 """
@@ -27,6 +42,27 @@ Method echoes the string message that triggered the event.
 # TODO: Subscribe to all events in a #intern channel and listen for messages that start with '!intern'
 
 BOT_ID = client.api_call('auth.test')['user_id']  # obtains the id of the bot
+
+"""
+STORAGE OF KNOWN COMMANDS THAT CAN BE EXECUTED BY THE INTERN...
+"""
+known_commands = {
+    'menu': Menu(),
+    'quote': lambda arr: Quote(*arr),
+    'news': lambda arr: News(*arr),
+    'ta': lambda arr: Technical_Analysis(*arr),
+    'heatmap': Heatmap(),
+    'dcf': lambda arr: DCF(*arr),
+    'inst-holdings': lambda arr: Inst_Holdings(*arr),
+    'insiders': lambda arr: Insiders(*arr),
+    'next-er': lambda arr: Next_ER_Date(*arr),
+    'er': lambda arr: ER_Info(*arr),
+    'er-impl-move': lambda arr: ER_Implied_Move(*arr),
+    'analyst': lambda arr: Analyst_Recommendations(*arr),
+    'pt': lambda arr: Price_Target(*arr),
+    'port': Portfolio_Holdings()
+}
+
 
 @slack_event_adapter.on('message')
 def message(payload):
@@ -40,18 +76,32 @@ def message(payload):
 
     processor = threading.Thread(
         target=process_event,
-        args=(slack_request,channel_id,user_id,msg_arr,)
-        )
+        args=(slack_request, channel_id, user_id, msg_arr,)
+    )
     processor.start()
     return "Preparing chat response... please wait"
+
 
 def process_event(slack_request, channel_id, user_id, msg_arr):
     if BOT_ID != user_id:
         if msg_arr[0] == "!intern":
             try:
-                command = Command(msg_arr[1:])
-                response_text = command.apply(msg_arr[2:])
-                client.chat_postMessage(channel=channel_id, text=response_text)
+                command = known_commands.get(msg_arr[1])
+                if not command:
+                    client.chat_postMessage(channel=channel_id, text="Command not found... Please try again.")
+                else:
+                    try:
+                        if len(msg_arr) > 2:
+                            cmd_object = command(msg_arr[2:])
+                        else:
+                            cmd_object = command
+                        response = cmd_object.execute()
+                        if type(response) == str:
+                            client.chat_postMessage(channel=channel_id, text=response)
+                        else:
+                            client.chat_postMessage(channel=channel_id, text="Images and files not supported yet.")
+                    except Exception as e:
+                        client.chat_postMessage(channel=channel_id, text="Error compiling command... Please try again.")
             except ValueError as e:
                 client.chat_postMessage(channel=channel_id, text=str(e))
 
@@ -64,11 +114,14 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
     #     # TODO: Do something with the remainder of the message
     #     client.chat_postMessage(channel=channel_id, text=text)  # echoes the message sent to the bot
 
+
 """
 Command method:
 When user calls /get-random in slack, the bot will return a message:
 @<user>, your random number is <random num>.
 """
+
+
 @app.route('/get-random', methods=['POST'])
 def get_random():
     data = request.form
