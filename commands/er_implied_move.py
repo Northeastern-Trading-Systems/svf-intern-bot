@@ -1,3 +1,4 @@
+from openbb_terminal.api import openbb
 """
 Examples:
 er-impl-move AAPL

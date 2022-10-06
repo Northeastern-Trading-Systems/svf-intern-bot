@@ -1,3 +1,5 @@
+from openbb_terminal.api import openbb
+
 class DCF:
     ticker: str
 

@@ -1,3 +1,4 @@
+from openbb_terminal.api import openbb
 """
 Examples:
 inst-holdings AAPL

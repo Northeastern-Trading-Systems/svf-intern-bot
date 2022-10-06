@@ -1,7 +1,9 @@
+from openbb_terminal.api import openbb
 """
 Examples:
 quote AAPL
 """
+
 class Quote:
     ticker: str
 

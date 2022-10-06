@@ -1,3 +1,4 @@
+from openbb_terminal.api import openbb
 class Heatmap:
     map: None
 
