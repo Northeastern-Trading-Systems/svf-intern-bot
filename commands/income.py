@@ -11,7 +11,7 @@ class Income_Stmt:
 
     def execute(self):
         try:
-            result = str(openbb.stocks.fa.income(self.ticker))
+            result = str(openbb.stocks.fa.av_income(self.ticker))
             return result
         except IndexError as e:
             raise ValueError("Please provide a symbol for income statement, e.g. <!intern pt AAPL>")
