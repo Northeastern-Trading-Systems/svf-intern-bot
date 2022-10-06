@@ -1,4 +1,5 @@
 from openbb_terminal.api import openbb
+from tabulate import tabulate
 """
 Examples:
 quote AAPL
@@ -12,7 +13,7 @@ class Quote:
 
     def execute(self):
         try:
-            result = str(openbb.stocks.quote(self.ticker))
+            result = tabulate(openbb.stocks.quote(self.ticker), headers='keys', tablefmt='psql', showindex=False)
             return result
         except IndexError as e:
             raise ValueError("Please provide a symbol to quote, e.g. <!intern quote AAPL>")
