@@ -1,4 +1,5 @@
 from openbb_terminal.api import openbb
+from tabulate import tabulate
 """
 Examples:
 news AAPL
@@ -11,7 +12,7 @@ class News:
 
     def execute(self):
         try:
-            result = str(openbb.common.news(self.param))
+            result = tabulate(openbb.common.news(self.param), headers='keys', tablefmt='psql', showindex=False)
             return result
         except IndexError as e:
             raise ValueError("Please provide a single search term for news, e.g. <!intern news twitter>")
