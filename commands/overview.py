@@ -11,7 +11,7 @@ class Overview:
 
     def execute(self):
         try:
-            result = str(openbb.stocks.fa.av_overview(self.ticker))
+            result = "```\n"+str(openbb.stocks.fa.av_overview(self.ticker))+"\n```"
             return result
         except IndexError as e:
             raise ValueError("Please provide a symbol for an overview, e.g. <!intern overview GSL>")
