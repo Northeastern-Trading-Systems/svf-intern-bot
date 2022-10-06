@@ -6,8 +6,8 @@ news AAPL
 
 class News:
 
-    def __init__(self, param):
-        self.param = param
+    def __init__(self, *param):
+        self.param = " ".join(param)
 
     def execute(self):
         try:
