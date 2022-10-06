@@ -1,9 +1,9 @@
 from openbb_terminal.api import openbb
 """
 Examples:
-analysis AAPL
+filings AAPL
 """
-class Analysis:
+class Filings:
     ticker: str
 
     def __init__(self, ticker):
@@ -11,7 +11,7 @@ class Analysis:
 
     def execute(self):
         try:
-            result = str(openbb.stocks.fa.analyst(self.ticker))
+            result = str(openbb.stocks.fa.analysis(self.ticker))
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for analysis, e.g. <!intern analyst AAPL>")
+            raise ValueError("Please provide a symbol for analysis, e.g. <!intern filings AAPL>")

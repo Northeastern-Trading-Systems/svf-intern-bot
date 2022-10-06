@@ -24,6 +24,7 @@ from commands.portfolio_holdings import Portfolio_Holdings
 from commands.price_target import Price_Target
 from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
+from commands.filings import Filings
 
 env_path = Path('.') / 'env'  # denotes where path for the file is so we can load it
 load_dotenv(dotenv_path=env_path)
@@ -60,7 +61,8 @@ known_commands = {
     'er-impl-move': lambda arr: ER_Implied_Move(*arr),
     'analyst': lambda arr: Analyst_Recommendations(*arr),
     'pt': lambda arr: Price_Target(*arr),
-    'port': Portfolio_Holdings()
+    'port': Portfolio_Holdings(),
+    'filings': lambda arr: Filings(*arr)
 }
 
 
