@@ -12,7 +12,7 @@ class News:
 
     def execute(self):
         try:
-            result = tabulate(openbb.common.news(self.param), headers='keys', tablefmt='psql', showindex=False)
+            result = "```\n"+tabulate(openbb.common.news(self.param), headers='keys', tablefmt='psql', showindex=False)+"\n```"
             return result
         except IndexError as e:
             raise ValueError("Please provide a single search term for news, e.g. <!intern news twitter>")
