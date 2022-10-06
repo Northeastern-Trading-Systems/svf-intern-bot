@@ -13,7 +13,7 @@ class Quote:
 
     def execute(self):
         try:
-            result = tabulate(openbb.stocks.quote(self.ticker), headers='keys', tablefmt='simple')
+            result = tabulate(openbb.stocks.quote(self.ticker), headers='keys', tablefmt='pretty')
             return result
         except IndexError as e:
             raise ValueError("Please provide a symbol to quote, e.g. <!intern quote AAPL>")
