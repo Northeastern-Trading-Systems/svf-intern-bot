@@ -5,6 +5,7 @@ Examples:
 quote AAPL
 """
 
+
 class Quote:
     ticker: str
 
@@ -13,7 +14,8 @@ class Quote:
 
     def execute(self):
         try:
-            result = tabulate(openbb.stocks.quote(self.ticker), headers='keys', tablefmt='pretty')
+            result = f"```{tabulate(openbb.stocks.quote(self.ticker), headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol to quote, e.g. <!intern quote AAPL>")
+            raise ValueError(
+                "Please provide a symbol to quote, e.g. <!intern quote AAPL>")
