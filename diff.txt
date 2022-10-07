@@ -1,0 +1,74 @@
+diff --git a/openbb_terminal/api.py b/openbb_terminal/api.py
+index e65f387d80..dd5120c343 100644
+--- a/openbb_terminal/api.py
++++ b/openbb_terminal/api.py
+@@ -1554,7 +1554,7 @@ functions = {
+         "model": "openbb_terminal.stocks.fundamental_analysis.fmp_model.get_cash"
+     },
+     "stocks.fa.dcf": {
+-        "model": "openbb_terminal.stocks.fundamental_analysis.fmp_model.get_dcf"
++        "model": "openbb_terminal.stocks.fundamental_analysis.dcf_model.create_dataframe"
+     },
+     "stocks.fa.enterprise": {
+         "model": "openbb_terminal.stocks.fundamental_analysis.fmp_model.get_enterprise"
+diff --git a/openbb_terminal/stocks/fundamental_analysis/dcf_model.py b/openbb_terminal/stocks/fundamental_analysis/dcf_model.py
+index 3b4006c6f9..934fab4b9b 100644
+--- a/openbb_terminal/stocks/fundamental_analysis/dcf_model.py
++++ b/openbb_terminal/stocks/fundamental_analysis/dcf_model.py
+@@ -593,7 +595,7 @@ def generate_path(n: int, symbol: str, date: str) -> Path:
+     export_folder = compose_export_path(
+         func_name="dcf", dir_path=os.path.abspath(os.path.dirname(__file__))
+     ).parent
+-    trypath = export_folder / symbol / date / val
+-    trypath = str(trypath) + ".xlsx"  # type: ignore
++    trypath = export_folder / symbol / date
++    trypath = str(trypath) + val + ".xlsx"  # type: ignore
+ 
+     return Path(trypath)
+diff --git a/openbb_terminal/stocks/fundamental_analysis/dcf_view.py b/openbb_terminal/stocks/fundamental_analysis/dcf_view.py
+index 527e35eb52..f623abd5ee 100644
+--- a/openbb_terminal/stocks/fundamental_analysis/dcf_view.py
++++ b/openbb_terminal/stocks/fundamental_analysis/dcf_view.py
+@@ -98,8 +98,8 @@ class CreateExcelFA:
+             self.ws[2].column_dimensions[column].width = 14
+         self.ws[3].column_dimensions["A"].width = 3
+ 
+-        for _, value in self.ws.items():
+-            self.create_header(value)
++        # for _, value in self.ws.items():
++        #    self.create_header(value)
+ 
+         self.df["BS"], self.df["IS"], self.df["CF"] = dcf_model.clean_dataframes(
+             self.df["BS"], self.df["IS"], self.df["CF"]
+@@ -113,20 +113,24 @@ class CreateExcelFA:
+ 
+         i = 0
+         while True:
+-            path = dcf_model.generate_path(i, self.info["symbol"], self.data["now"])
++            path = dcf_model.generate_path(
++                i, self.info["symbol"], self.data["now"])
+             path.parent.mkdir(parents=True, exist_ok=True)
+ 
+             if not path.is_file():
+                 self.wb.save(path)
+-                console.print(f"Analysis for {self.info['symbol']} At:\n{path}.\n")
+-                break
++                console.print(
++                    f"{path}")
++                return str(path)
+             i += 1
+ 
+     @log_start_end(log=logger)
+     def get_data(self, statement: str, row: int, header: bool) -> pd.DataFrame:
+-        df, rounding, _ = dcf_model.create_dataframe(self.info["symbol"], statement)
++        df, rounding, _ = dcf_model.create_dataframe(
++            self.info["symbol"], statement)
+         if df.empty:
+-            raise ValueError("Could generate a dataframe for the ticker symbol")
++            raise ValueError(
++                "Could generate a dataframe for the ticker symbol")
+         self.info["rounding"] = rounding
+         if not self.info["len_data"]:
+             self.info["len_data"] = len(df.columns)
+
+

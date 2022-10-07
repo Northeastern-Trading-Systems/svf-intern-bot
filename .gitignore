@@ -3,3 +3,4 @@ OpenBBTerminal/
 *.ipynb
 venv/
 *cache*
+.env
