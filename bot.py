@@ -11,10 +11,13 @@ import threading
 import requests
 
 from commands.analyst_recommendations import Analyst_Recommendations
+from commands.cf import Cash_Flow
 from commands.dcf import DCF
 from commands.er_implied_move import ER_Implied_Move
 from commands.er_info import ER_Info
+from commands.f_data import Fundamental_Data
 from commands.heatmap import Heatmap
+from commands.income import Income_Stmt
 from commands.insiders import Insiders
 from commands.inst_holdings import Inst_Holdings
 from commands.menu import Menu
@@ -24,7 +27,6 @@ from commands.portfolio_holdings import Portfolio_Holdings
 from commands.price_target import Price_Target
 from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
-from commands.filings import Filings
 
 env_path = Path('.') / 'env'  # denotes where path for the file is so we can load it
 load_dotenv(dotenv_path=env_path)
@@ -62,7 +64,9 @@ known_commands = {
     'analyst': lambda arr: Analyst_Recommendations(*arr),
     'pt': lambda arr: Price_Target(*arr),
     'port': Portfolio_Holdings(),
-    'filings': lambda arr: Filings(*arr)
+    'fd': lambda arr: Fundamental_Data(*arr),
+    'cf': lambda arr: Cash_Flow(*arr),
+    'income': lambda arr: Income_Stmt(*arr)
 }
 
 
@@ -103,7 +107,7 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                         else:
                             client.chat_postMessage(channel=channel_id, text="Images and files not supported yet.")
                     except Exception as e:
-                        client.chat_postMessage(channel=channel_id, text=f"Error compiling command... Please try again.")
+                        client.chat_postMessage(channel=channel_id, text="Error compiling command... Please try again.")
             except ValueError as e:
                 client.chat_postMessage(channel=channel_id, text=str(e))
 
