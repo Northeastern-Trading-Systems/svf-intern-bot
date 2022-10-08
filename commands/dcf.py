@@ -1,6 +1,6 @@
 from openbb_terminal.api import openbb
 from openbb_terminal.stocks.fundamental_analysis import dcf_view
-import dbx_utils as du
+from . import dbx_utils as du
 
 
 class DCF:

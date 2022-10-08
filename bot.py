@@ -28,14 +28,17 @@ from commands.price_target import Price_Target
 from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
 
-env_path = Path('.') / 'env'  # denotes where path for the file is so we can load it
+# denotes where path for the file is so we can load it
+env_path = Path('.') / 'env'
 load_dotenv(dotenv_path=env_path)
 
 app = Flask(__name__)
 
-slack_event_adapter = SlackEventAdapter('8f57d4585beb8feaf5f5876d536930a9', '/slack/events', app)
+slack_event_adapter = SlackEventAdapter(
+    '8f57d4585beb8feaf5f5876d536930a9', '/slack/events', app)
 client = slack.WebClient(token=os.environ['TOKEN_ID'])
 client.chat_postMessage(channel='#svf-slack-bot', text='Testing again')
+
 
 """
 Event method:
@@ -72,7 +75,8 @@ known_commands = {
 
 @slack_event_adapter.on('message')
 def message(payload):
-    event = payload.get('event', {})  # look for 'event' in payload, if it is not found then return an empty dict
+    # look for 'event' in payload, if it is not found then return an empty dict
+    event = payload.get('event', {})
     channel_id = event.get('channel')
     user_id = event.get('user')
     text = event.get('text')
@@ -94,7 +98,8 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
             try:
                 command = known_commands.get(msg_arr[1])
                 if not command:
-                    client.chat_postMessage(channel=channel_id, text="Command not found... Please try again.")
+                    client.chat_postMessage(
+                        channel=channel_id, text="Command not found... Please try again.")
                 else:
                     try:
                         if len(msg_arr) > 2:
@@ -103,11 +108,14 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                             cmd_object = command
                         response = cmd_object.execute()
                         if type(response) == str:
-                            client.chat_postMessage(channel=channel_id, text=response)
+                            client.chat_postMessage(
+                                channel=channel_id, text=response)
                         else:
-                            client.chat_postMessage(channel=channel_id, text="Images and files not supported yet.")
+                            client.chat_postMessage(
+                                channel=channel_id, text="Images and files not supported yet.")
                     except Exception as e:
-                        client.chat_postMessage(channel=channel_id, text="Error compiling command... Please try again.")
+                        client.chat_postMessage(
+                            channel=channel_id, text="Error compiling command... Please try again.")
             except ValueError as e:
                 client.chat_postMessage(channel=channel_id, text=str(e))
 
@@ -135,4 +143,5 @@ def get_random():
     channel_id = data.get('channel_id')
     rand = random.random()
 
-    client.chat_postMessage(channel=channel_id, text=f'@{user_id}, your random number is {rand}.')
+    client.chat_postMessage(
+        channel=channel_id, text=f'@{user_id}, your random number is {rand}.')
