@@ -13,7 +13,7 @@ import requests
 from commands.analyst_recommendations import Analyst_Recommendations
 from commands.cf import Cash_Flow
 from commands.dcf import DCF
-from commands.er_implied_move import ER_Implied_Move
+#from commands.er_implied_move import ER_Implied_Move
 from commands.er_info import ER_Info
 from commands.f_data import Fundamental_Data
 from commands.heatmap import Heatmap
