@@ -18,6 +18,7 @@ class Income_Stmt:
         try:
             result = openbb.stocks.fa.fmp_income(self.ticker)
             result = result[0:34]
+            result = result.drop(result.columns[[3, 4]], axis=1)
             result = f"```{tabulate(result, headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
