@@ -1,4 +1,6 @@
 from openbb_terminal.api import openbb
+import pandas as pd
+import numpy as np
 """
 Examples:
 income AAPL
