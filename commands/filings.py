@@ -1,4 +1,6 @@
 from openbb_terminal.api import openbb
+from tabulate import tablulate
+
 """
 Examples:
 filings AAPL
@@ -11,7 +13,10 @@ class Filings:
 
     def execute(self):
         try:
-            result = str(openbb.stocks.fa.analysis(self.ticker))
+            result = openbb.stocks.dd.sec('AAPL')
+            result = result.drop(['Document Date', 'Category', 'Amended'], axis=1)
+            result = result[:8]
+            result = f"```{tabulate(result, headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for analysis, e.g. <!intern filings AAPL>")
+            raise ValueError("Please provide a symbol for filings, e.g. <!intern filings AAPL>")

@@ -1,4 +1,6 @@
 from openbb_terminal.api import openbb
+from tabulate import tablulate
+
 """
 Examples:
 ta AAPL

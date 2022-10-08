@@ -27,6 +27,8 @@ from commands.portfolio_holdings import Portfolio_Holdings
 from commands.price_target import Price_Target
 from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
+from commands.shareholders import Shareholders
+from commands.analysis import Analysis
 
 # denotes where path for the file is so we can load it
 env_path = Path('.') / 'env'
@@ -59,17 +61,17 @@ known_commands = {
     'ta': lambda arr: Technical_Analysis(*arr),
     'heatmap': Heatmap(),
     'dcf': lambda arr: DCF(*arr),
-    'inst-holdings': lambda arr: Inst_Holdings(*arr),
     'insiders': lambda arr: Insiders(*arr),
     'overview': lambda arr: Overview(*arr),
     'er': lambda arr: ER_Info(*arr),
-    'er-impl-move': lambda arr: ER_Implied_Move(*arr),
     'analyst': lambda arr: Analyst_Recommendations(*arr),
     'pt': lambda arr: Price_Target(*arr),
     'port': Portfolio_Holdings(),
     'fd': lambda arr: Fundamental_Data(*arr),
     'cf': lambda arr: Cash_Flow(*arr),
-    'income': lambda arr: Income_Stmt(*arr)
+    'income': lambda arr: Income_Stmt(*arr),
+    'shrs': lambda arr: Shareholders(*arr),
+    'analysis': lambda arr: Analysis(*arr)
 }
 
 
