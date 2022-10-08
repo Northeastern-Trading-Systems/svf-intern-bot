@@ -22,3 +22,4 @@ class Income_Stmt:
         except IndexError as e:
             raise ValueError(
                 "Please provide a symbol for income statement, e.g. <!intern pt AAPL>")
+            print(e)
