@@ -1,4 +1,5 @@
 from openbb_terminal.api import openbb
+from tabulate import tabulate
 import pandas as pd
 import numpy as np
 """
