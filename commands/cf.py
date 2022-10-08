@@ -16,7 +16,7 @@ class Cash_Flow:
         try:
             result = openbb.stocks.fa.fmp_cash(self.ticker)
             result = result[0:34]
-            result = result.drop(result.columns[[3, 4]], axis=1)
+            result = result.drop(result.columns[[2, 3, 4]], axis=1)
             result = f"```{tabulate(result, headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
