@@ -19,7 +19,7 @@ from commands.f_data import Fundamental_Data
 from commands.heatmap import Heatmap
 from commands.income import Income_Stmt
 from commands.insiders import Insiders
-from commands.inst_holdings import Inst_Holdings
+#from commands.inst_holdings import Inst_Holdings
 from commands.menu import Menu
 from commands.news import News
 from commands.overview import Overview
