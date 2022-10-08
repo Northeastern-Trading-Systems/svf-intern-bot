@@ -13,7 +13,7 @@ class Fundamental_Data:
 
     def execute(self):
         try:
-            result = str(openbb.stocks.fa.data(self.ticker))
+            result = f"```{tabulate(openbb.stocks.fa.data(self.ticker), headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
             raise ValueError("Please provide a symbol for fundamental data, e.g. <!intern fd AAPL>")

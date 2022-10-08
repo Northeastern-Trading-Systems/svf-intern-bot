@@ -13,7 +13,9 @@ class ER_Info:
 
     def execute(self):
         try:
-            result = "Command not yet supported..."
+            result = openbb.stocks.fa.earnings(self.ticker, True)
+            result = result[:5]
+            result = f"```{tabulate(result, headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for price target history, e.g. <!intern pt AAPL>")
+            raise ValueError("Please provide a symbol for earnings info, e.g. <!intern pt AAPL>")

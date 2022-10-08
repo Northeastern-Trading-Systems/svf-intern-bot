@@ -14,9 +14,9 @@ class Insiders:
     def execute(self):
         try:
             result = openbb.stocks.ins.lins(self.ticker)
-            #result = result[0:34]
-            #result = result.drop(result.columns[[2, 3, 4]], axis=1)
+            result = result.drop(columns=['#Shares Total', 'Insider Trading', 'SEC Form 4'], axis=1)
+            result = result[:10]
             result = f"```{tabulate(result, headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for insider holdings, e.g. <!intern pt AAPL>")
+            raise ValueError("Please provide a symbol for insider activity, e.g. <!intern insiders AAPL>")

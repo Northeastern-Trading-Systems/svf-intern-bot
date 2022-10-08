@@ -14,8 +14,7 @@ class Analysis:
 
     def execute(self):
         try:
-            result = f"```{tabulate(openbb.stocks.fa.analysis(self.ticker), headers='keys', tablefmt='pretty')}```"
-            
+            result = f"```{tabulate(openbb.stocks.fa.analysis(self.ticker).head(10), headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
             raise ValueError(
