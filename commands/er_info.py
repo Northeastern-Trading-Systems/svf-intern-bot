@@ -1,10 +1,12 @@
 from openbb_terminal.api import openbb
-from tabulate import tablulate
+from tabulate import tabulate
 
 """
 Examples:
 er AAPL
 """
+
+
 class ER_Info:
     ticker: str
 
@@ -18,4 +20,5 @@ class ER_Info:
             result = f"```{tabulate(result, headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for earnings info, e.g. <!intern pt AAPL>")
+            raise ValueError(
+                "Please provide a symbol for earnings info, e.g. <!intern pt AAPL>")

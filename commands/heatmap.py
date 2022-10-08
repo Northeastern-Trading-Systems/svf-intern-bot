@@ -1,5 +1,6 @@
 from openbb_terminal.api import openbb
-from tabulate import tablulate
+from tabulate import tabulate
+
 
 class Heatmap:
     map: None
@@ -9,7 +10,9 @@ class Heatmap:
 
     def execute(self):
         try:
-            result = str(openbb.stocks.disc.heatmap())  # Might not be a function
+            # Might not be a function
+            result = str(openbb.stocks.disc.heatmap())
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for price target history, e.g. <!intern pt AAPL>")
+            raise ValueError(
+                "Please provide a symbol for price target history, e.g. <!intern pt AAPL>")

@@ -1,10 +1,12 @@
 from openbb_terminal.api import openbb
-from tabulate import tablulate
+from tabulate import tabulate
 
 """
 Examples:
 insiders AAPL
 """
+
+
 class Shareholders:
     ticker: str
 
@@ -17,4 +19,5 @@ class Shareholders:
             result = f"```{tabulate(result, headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for shareholder analysis, e.g. <!intern shrs AAPL>")
+            raise ValueError(
+                "Please provide a symbol for shareholder analysis, e.g. <!intern shrs AAPL>")
