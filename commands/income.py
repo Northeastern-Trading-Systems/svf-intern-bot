@@ -13,7 +13,9 @@ class Income_Stmt:
 
     def execute(self):
         try:
-            result = str(openbb.stocks.fa.fmp_income(self.ticker))
+            result = openbb.stocks.fa.fmp_income(self.ticker)
+            result = result[0:34]
+            result = f"```{tabulate(result, headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
             raise ValueError(

@@ -27,6 +27,7 @@ from commands.portfolio_holdings import Portfolio_Holdings
 from commands.price_target import Price_Target
 from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
+from commands.shareholders import Shareholders
 
 env_path = Path('.') / 'env'  # denotes where path for the file is so we can load it
 load_dotenv(dotenv_path=env_path)
@@ -66,7 +67,8 @@ known_commands = {
     'port': Portfolio_Holdings(),
     'fd': lambda arr: Fundamental_Data(*arr),
     'cf': lambda arr: Cash_Flow(*arr),
-    'income': lambda arr: Income_Stmt(*arr)
+    'income': lambda arr: Income_Stmt(*arr),
+    'shrs': lambda arr: Shareholders(*arr)
 }
 
 
