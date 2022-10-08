@@ -1,5 +1,5 @@
 from openbb_terminal.api import openbb
-from tabulate import tablulate
+from tabulate import tabulate
 
 """
 Examples:
