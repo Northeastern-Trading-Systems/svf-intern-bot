@@ -11,7 +11,7 @@ class Price_Target:
 
     def execute(self):
         try:
-            result = str(openbb.stocks.dd.pt(self.ticker))
+            result = f"```{tabulate(openbb.stocks.dd.pt(self.ticker), headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
             raise ValueError("Please provide a symbol for price target history, e.g. <!intern pt AAPL>")
