@@ -2,7 +2,7 @@ import dropbox
 import os
 from dotenv import load_dotenv
 from dropbox.exceptions import ApiError, AuthError
-from tabulate import tablulate
+from tabulate import tabulate
 
 
 class DropboxUtils:
