@@ -1,9 +1,11 @@
 from openbb_terminal.api import openbb
-from tabulate import tablulate
+from tabulate import tabulate
 """
 Examples:
 analyst AAPL
 """
+
+
 class Analyst_Recommendations:
     ticker: str
 
@@ -15,4 +17,5 @@ class Analyst_Recommendations:
             result = f"```{tabulate(openbb.stocks.dd.analyst(self.ticker), headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for analyst recommendations, e.g. <!intern analyst AAPL>")
+            raise ValueError(
+                "Please provide a symbol for analyst recommendations, e.g. <!intern analyst AAPL>")
