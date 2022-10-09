@@ -1,10 +1,12 @@
 # imports
 import random
+from typing import Tuple
 import slack
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 from flask import Flask, request
+import slack_sdk
 from slackeventsapi import SlackEventAdapter
 from commands import *
 import threading
@@ -29,6 +31,7 @@ from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
 from commands.shareholders import Shareholders
 from commands.analysis import Analysis
+from commands.candle import Candle
 
 # denotes where path for the file is so we can load it
 env_path = Path('.') / 'env'
@@ -71,7 +74,8 @@ known_commands = {
     'cf': lambda arr: Cash_Flow(*arr),
     'income': lambda arr: Income_Stmt(*arr),
     'shrs': lambda arr: Shareholders(*arr),
-    'analysis': lambda arr: Analysis(*arr)
+    'analysis': lambda arr: Analysis(*arr),
+    'candle': lambda arr: Candle(*arr),
 }
 
 
@@ -112,6 +116,20 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                         if type(response) == str:
                             client.chat_postMessage(
                                 channel=channel_id, text=response)
+                        elif type(response) == Tuple[str, str]:
+                            if response[0] == "IMG":
+                                with open(response[1]) as image:
+                                    try:
+                                        client.files_upload(
+                                            file=image, channels=channel_id)
+                                    except slack_sdk.errors.SlackRequestError as e:
+                                        client.chat_postMessage(
+                                            channel=channel_id,
+                                            text="Image upload failed, please contact bot admins."
+                                        )
+                            else:
+                                client.chat_postMessage(
+                                    channel=channel_id, text="Error compiling command... Please try again.")
                         else:
                             client.chat_postMessage(
                                 channel=channel_id, text="Images and files not supported yet.")
