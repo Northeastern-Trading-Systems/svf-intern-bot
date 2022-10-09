@@ -17,7 +17,7 @@ class Candle:
             fig.suptitle('AAPL Price and Volume')
             path = f'/root/OpenBBUserData/exports/stocks/charts/{self.ticker}-{uuid4()}.png'
             fig.savefig(path, dpi=800)
-            return "IMG", path
+            return ("IMG", path)
         except IndexError as e:
             raise ValueError(
                 "Please provide a symbol to quote, e.g. <!intern quote AAPL>")

@@ -116,7 +116,7 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                         if type(response) == str:
                             client.chat_postMessage(
                                 channel=channel_id, text=response)
-                        elif type(response) == Tuple[str, str]:
+                        elif type(response) == Tuple:
                             if response[0] == "IMG":
                                 with open(response[1]) as image:
                                     try:
