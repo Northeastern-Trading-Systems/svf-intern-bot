@@ -14,7 +14,7 @@ class Candle:
             plt.rcParams["figure.dpi"] = 300
             fig, (ax1, ax2) = plt.subplots(2)
             openbb.stocks.candle(self.ticker, external_axes=[ax1, ax2])
-            fig.suptitle('AAPL Price and Volume')
+            fig.suptitle(f'{self.ticker} Price and Volume')
             path = f'/root/OpenBBUserData/exports/stocks/charts/{self.ticker}-{uuid4()}.png'
             fig.savefig(path, dpi=800)
             return ("IMG", path)

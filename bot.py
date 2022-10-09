@@ -133,7 +133,6 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                                     client.chat_postMessage(
                                         channel=channel_id,
                                         text="Excel sheet upload failed, please contact bot admins.",
-                                        title=response[2]
                                     )
                             else:
                                 client.chat_postMessage(
