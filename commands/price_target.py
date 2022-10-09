@@ -1,10 +1,12 @@
 from openbb_terminal.api import openbb
-from tabulate import tablulate
+from tabulate import tabulate
 
 """
 Examples:
 pt AAPL
 """
+
+
 class Price_Target:
     ticker: str
 
@@ -16,4 +18,5 @@ class Price_Target:
             result = f"```{tabulate(openbb.stocks.dd.pt(self.ticker).head(16), headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
-            raise ValueError("Please provide a symbol for price target history, e.g. <!intern pt AAPL>")
+            raise ValueError(
+                "Please provide a symbol for price target history, e.g. <!intern pt AAPL>")

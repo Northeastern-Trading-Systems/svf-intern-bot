@@ -1,4 +1,5 @@
-from tabulate import tablulate
+from tabulate import tabulate
+
 
 class Menu:
     msg: str
