@@ -118,16 +118,14 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                                 channel=channel_id, text=response)
                         else:
                             if response[0] == "IMG":
-                                with open(response[1]) as image:
-                                    bytesimg = image.read()
-                                    try:
-                                        client.files_upload(
-                                            content=bytesimg, channels=channel_id)
-                                    except slack_sdk.errors.SlackRequestError as e:
-                                        client.chat_postMessage(
-                                            channel=channel_id,
-                                            text="Image upload failed, please contact bot admins."
-                                        )
+                                try:
+                                    client.files_upload(
+                                        content=response[1], channels=channel_id)
+                                except slack_sdk.errors.SlackRequestError as e:
+                                    client.chat_postMessage(
+                                        channel=channel_id,
+                                        text="Image upload failed, please contact bot admins."
+                                    )
                             else:
                                 client.chat_postMessage(
                                     channel=channel_id, text="Error compiling command... Please try again.")
