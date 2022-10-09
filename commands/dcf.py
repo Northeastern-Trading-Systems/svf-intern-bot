@@ -13,9 +13,7 @@ class DCF:
         try:
             workbook: str = dcf_view.CreateExcelFA(
                 self.ticker).create_workbook()
-            destination = workbook.replace(
-                "/root/OpenBBUserData/exports", "/svf-intern-bot")
-            return du.DropboxUtils().upload_and_link(workbook, destination)
+            return ("XLSX", workbook)
         except IndexError as e:
             raise ValueError(
                 "Please provide a symbol for price target history, e.g. <!intern pt AAPL>")

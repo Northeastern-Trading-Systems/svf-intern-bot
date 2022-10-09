@@ -126,6 +126,15 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                                         channel=channel_id,
                                         text="Image upload failed, please contact bot admins."
                                     )
+                            elif response[0] == "XLSX":
+                                try:
+                                    client.files_upload(
+                                        file=response[1], channels=channel_id)
+                                except slack_sdk.errors.SlackRequestError as e:
+                                    client.chat_postMessage(
+                                        channel=channel_id,
+                                        text="Excel sheet upload failed, please contact bot admins."
+                                    )
                             else:
                                 client.chat_postMessage(
                                     channel=channel_id, text="Error compiling command... Please try again.")
