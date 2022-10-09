@@ -119,9 +119,10 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                         else:
                             if response[0] == "IMG":
                                 with open(response[1]) as image:
+                                    bytesimg = image.read()
                                     try:
                                         client.files_upload(
-                                            file=image, channels=channel_id)
+                                            content=bytesimg, channels=channel_id)
                                     except slack_sdk.errors.SlackRequestError as e:
                                         client.chat_postMessage(
                                             channel=channel_id,
