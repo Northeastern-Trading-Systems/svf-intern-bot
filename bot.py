@@ -42,7 +42,8 @@ app = Flask(__name__)
 slack_event_adapter = SlackEventAdapter(
     '6ea91d5b2e5b57e06e465b987c6c8f1d', '/slack/events', app)
 client = slack.WebClient(token=os.environ['TOKEN_ID'])
-client.chat_postMessage(channel='#intern-bot', text='Testing again')
+client.chat_postMessage(channel='#intern-bot',
+                        text='Intern Bot running on v1.0')
 
 
 """
