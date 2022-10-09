@@ -1,10 +1,12 @@
 # imports
 import random
+from typing import Tuple
 import slack
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 from flask import Flask, request
+import slack_sdk
 from slackeventsapi import SlackEventAdapter
 from commands import *
 import threading
@@ -19,7 +21,7 @@ from commands.f_data import Fundamental_Data
 from commands.heatmap import Heatmap
 from commands.income import Income_Stmt
 from commands.insiders import Insiders
-#from commands.inst_holdings import Inst_Holdings
+from commands.inst_holdings import Inst_Holdings
 from commands.menu import Menu
 from commands.news import News
 from commands.overview import Overview
@@ -29,7 +31,6 @@ from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
 from commands.shareholders import Shareholders
 from commands.analysis import Analysis
-from commands.filings import Filings
 
 # denotes where path for the file is so we can load it
 env_path = Path('.') / 'env'
@@ -72,8 +73,7 @@ known_commands = {
     'cf': lambda arr: Cash_Flow(*arr),
     'income': lambda arr: Income_Stmt(*arr),
     'shrs': lambda arr: Shareholders(*arr),
-    'analysis': lambda arr: Analysis(*arr),
-    'filings': lambda arr: Filings(*arr)
+    'analysis': lambda arr: Analysis(*arr)
 }
 
 
@@ -115,11 +115,30 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                             client.chat_postMessage(
                                 channel=channel_id, text=response)
                         else:
-                            client.chat_postMessage(
-                                channel=channel_id, text="Images and files not supported yet.")
+                            if response[0] == "IMG":
+                                try:
+                                    client.files_upload(
+                                        file=response[1], channels=channel_id)
+                                except slack_sdk.errors.SlackRequestError as e:
+                                    client.chat_postMessage(
+                                        channel=channel_id,
+                                        text="Image upload failed, please contact bot admins."
+                                    )
+                            elif response[0] == "XLSX":
+                                try:
+                                    client.files_upload(
+                                        file=response[1], channels=channel_id)
+                                except slack_sdk.errors.SlackRequestError as e:
+                                    client.chat_postMessage(
+                                        channel=channel_id,
+                                        text="Excel sheet upload failed, please contact bot admins."
+                                    )
+                            else:
+                                client.chat_postMessage(
+                                    channel=channel_id, text="Error compiling command... Please try again.")
                     except Exception as e:
                         client.chat_postMessage(
-                            channel=channel_id, text="Error compiling command... Please try again.")
+                            channel=channel_id, text=f"Error compiling command... Please try again. {e}")
             except ValueError as e:
                 client.chat_postMessage(channel=channel_id, text=str(e))
 
