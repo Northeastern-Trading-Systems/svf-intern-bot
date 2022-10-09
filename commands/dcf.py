@@ -13,7 +13,7 @@ class DCF:
         try:
             workbook: str = dcf_view.CreateExcelFA(
                 self.ticker).create_workbook()
-            return ("XLSX", workbook)
+            return ("XLSX", workbook, f"{self.ticker}-DCF")
         except IndexError as e:
             raise ValueError(
                 "Please provide a symbol for price target history, e.g. <!intern pt AAPL>")
