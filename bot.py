@@ -31,6 +31,7 @@ from commands.technical_analysis import Technical_Analysis
 from commands.shareholders import Shareholders
 from commands.analysis import Analysis
 from commands.candle import Candle
+from commands.filings import Filings
 
 # denotes where path for the file is so we can load it
 env_path = Path('.') / 'env'
@@ -75,6 +76,7 @@ known_commands = {
     'shrs': lambda arr: Shareholders(*arr),
     'analysis': lambda arr: Analysis(*arr),
     'candle': lambda arr: Candle(*arr),
+    'filings': lambda arr: Filings(*arr),
 }
 
 
@@ -125,7 +127,7 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                                         channel=channel_id,
                                         text="Image upload failed, please contact bot admins."
                                     )
-                            elif response[0] == "XLSX":
+                            elif response[0] == "XLSX" or response[0] == "CSV":
                                 try:
                                     client.files_upload(
                                         file=response[1], channels=channel_id)
@@ -139,7 +141,7 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                                     channel=channel_id, text="Error compiling command... Please try again.")
                     except Exception as e:
                         client.chat_postMessage(
-                            channel=channel_id, text=f"Error compiling command... Please try again. {e}")
+                            channel=channel_id, text=f"Error compiling command... Please try again.")
             except ValueError as e:
                 client.chat_postMessage(channel=channel_id, text=str(e))
 

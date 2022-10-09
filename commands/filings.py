@@ -15,7 +15,7 @@ class Filings:
 
     def execute(self):
         try:
-            result = openbb.stocks.dd.sec('AAPL')
+            result = openbb.stocks.dd.sec(self.ticker)
             result = result.drop(
                 ['Document Date', 'Category', 'Amended'], axis=1)
             result = result[:8]
