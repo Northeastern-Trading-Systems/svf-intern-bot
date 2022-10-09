@@ -120,7 +120,7 @@ def process_event(slack_request, channel_id, user_id, msg_arr):
                             if response[0] == "IMG":
                                 try:
                                     client.files_upload(
-                                        content=response[1], channels=channel_id)
+                                        file=response[1], channels=channel_id)
                                 except slack_sdk.errors.SlackRequestError as e:
                                     client.chat_postMessage(
                                         channel=channel_id,
