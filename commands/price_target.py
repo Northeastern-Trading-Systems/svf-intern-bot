@@ -15,7 +15,7 @@ class Price_Target:
 
     def execute(self):
         try:
-            result = f"```{tabulate(openbb.stocks.dd.pt(self.ticker), headers='keys', tablefmt='pretty')}```"
+            result = f"```{tabulate(openbb.stocks.dd.pt(self.ticker).head(16), headers='keys', tablefmt='pretty')}```"
             return result
         except IndexError as e:
             raise ValueError(
