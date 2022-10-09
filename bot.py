@@ -30,6 +30,7 @@ from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
 from commands.shareholders import Shareholders
 from commands.analysis import Analysis
+from commands.candle import Candle
 
 # denotes where path for the file is so we can load it
 env_path = Path('.') / 'env'
@@ -72,7 +73,8 @@ known_commands = {
     'cf': lambda arr: Cash_Flow(*arr),
     'income': lambda arr: Income_Stmt(*arr),
     'shrs': lambda arr: Shareholders(*arr),
-    'analysis': lambda arr: Analysis(*arr)
+    'analysis': lambda arr: Analysis(*arr),
+    'candle': lambda arr: Candle(*arr),
 }
 
 
