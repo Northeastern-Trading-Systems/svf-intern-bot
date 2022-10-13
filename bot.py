@@ -103,47 +103,46 @@ def message(payload):
 def process_event(slack_request, channel_id, user_id, msg_arr):
     if BOT_ID != user_id:
         if msg_arr[0] == "!intern":
-            try:
-                command = known_commands.get(msg_arr[1])
-                if not command:
-                    client.chat_postMessage(
-                        channel=channel_id, text="Command not found... Please try again.")
-                else:
-                    try:
-                        if len(msg_arr) > 2:
-                            cmd_object = command(msg_arr[2:])
-                        else:
-                            cmd_object = command
-                        response = cmd_object.execute()
-                        if type(response) == str:
-                            client.chat_postMessage(
-                                channel=channel_id, text=response)
-                        elif response[0] == "IMG":
-                            try:
-                                client.files_upload(
-                                    file=response[1], channels=channel_id)
-                            except slack_sdk.errors.SlackRequestError as e:
-                                client.chat_postMessage(
-                                    channel=channel_id,
-                                    text="Image upload failed, please contact bot admins."
-                                )
-                        elif response[0] == "XLSX" or response[0] == "CSV":
-                            try:
-                                client.files_upload(
-                                    file=response[1], channels=channel_id)
-                            except slack_sdk.errors.SlackRequestError as e:
-                                client.chat_postMessage(
-                                    channel=channel_id,
-                                    text="Excel sheet upload failed, please contact bot admins.",
-                                )
-                        else:
-                            client.chat_postMessage(
-                                channel=channel_id, text="Error compiling command... Please try again.")
-                    except Exception as e:
+            command = known_commands.get(msg_arr[1])
+            if not command:
+                client.chat_postMessage(
+                    channel=channel_id, text="Command not found... Please try again.")
+            else:
+                try:
+                    if len(msg_arr) > 2:
+                        cmd_object = command(msg_arr[2:])
+                    else:
+                        cmd_object = command
+                    response = cmd_object.execute()
+                    if type(response) == str:
                         client.chat_postMessage(
-                            channel=channel_id, text=f"Error compiling command... Please try again.")
-            except ValueError as e:
-                client.chat_postMessage(channel=channel_id, text=str(e))
+                            channel=channel_id, text=response)
+                    elif response[0] == "IMG":
+                        try:
+                            client.files_upload(
+                                file=response[1], channels=channel_id)
+                        except slack_sdk.errors.SlackRequestError as e:
+                            client.chat_postMessage(
+                                channel=channel_id,
+                                text="Image upload failed, please contact bot admins."
+                            )
+                    elif response[0] == "XLSX" or response[0] == "CSV":
+                        try:
+                            client.files_upload(
+                                file=response[1], channels=channel_id)
+                        except slack_sdk.errors.SlackRequestError as e:
+                            client.chat_postMessage(
+                                channel=channel_id,
+                                text="Excel sheet upload failed, please contact bot admins.",
+                            )
+                    else:
+                        client.chat_postMessage(
+                            channel=channel_id, text="Error compiling command... Please try again.")
+                except ValueError as e:
+                    client.chat_postMessage(channel=channel_id, text=str(e))
+                except Exception as e:
+                    client.chat_postMessage(
+                        channel=channel_id, text=f"Error compiling command... Please try again.")
 
     # # event must be coming from the proper channel
     # if channel_id != '#svf-slack-bot' or BOT_ID == user_id:
