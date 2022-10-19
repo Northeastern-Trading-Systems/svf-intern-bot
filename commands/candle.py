@@ -15,7 +15,7 @@ class Candle:
             fig, (ax1, ax2) = plt.subplots(2)
             openbb.stocks.candle(self.ticker, external_axes=[ax1, ax2])
             fig.suptitle(f'{self.ticker} Price and Volume')
-            path = f'/root/OpenBBUserData/exports/stocks/charts/{self.ticker}-{uuid4()}.png'
+            path = f'/home/charles/OpenBBUserData/exports/stocks/charts/{self.ticker}-{uuid4()}.png'
             fig.savefig(path, dpi=800)
             return ("IMG", path)
         except IndexError as e:
