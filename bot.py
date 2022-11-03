@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from flask import Flask, request
 import slack_sdk
 from slackeventsapi import SlackEventAdapter
-from commands import *
+from command import *
 import threading
 import requests
 
@@ -24,7 +24,7 @@ from commands.insiders import Insiders
 from commands.menu import Menu
 from commands.news import News
 from commands.overview import Overview
-from commands.portfolio_holdings import Portfolio_Holdings
+from commands.portfolio_holdings import PortfolioHoldings
 from commands.price_target import Price_Target
 from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
@@ -32,12 +32,7 @@ from commands.shareholders import Shareholders
 from commands.analysis import Analysis
 from commands.candle import Candle
 from commands.filings import Filings
-from commands.port_holdp import HoldP
-from commands.port_holdv import HoldV
-from commands.port_perf import PortPerformance
-from commands.port_rbeta import RollingBeta
-from commands.port_rvol import RollingVolatility
-from commands.port_sum import PortSummary
+
 
 # denotes where path for the file is so we can load it
 env_path = Path('.') / 'env'
@@ -64,6 +59,7 @@ BOT_ID = client.api_call('auth.test')['user_id']  # obtains the id of the bot
 """
 STORAGE OF KNOWN COMMANDS THAT CAN BE EXECUTED BY THE INTERN...
 """
+portfolio = PortfolioHoldings()  # instantiate daily portfolio object
 known_commands = {
     # menu
     'menu': Menu(),
@@ -74,7 +70,7 @@ known_commands = {
     'ta': lambda arr: Technical_Analysis(*arr),
     'heatmap': Heatmap(),
     'overview': lambda arr: Overview(*arr),
-    #fa
+    # fa
     'dcf': lambda arr: DCF(*arr),
     'insiders': lambda arr: Insiders(*arr),
     'filings': lambda arr: Filings(*arr),
@@ -90,9 +86,10 @@ known_commands = {
     # insiders
     'shrs': lambda arr: Shareholders(*arr),
     # port
-    'port': Portfolio_Holdings(),
+    'port': portfolio,
     'port-holdv': HoldV(),
-    'port-holdp': HoldP(),
+    # follow this pattern to implement the subclasses of PortfolioHoldings
+    'port-holdp': portfolio.HoldP(),
     'port-sum': PortSummary(),
     'port-perf': PortPerformance(),
     'port-rbeta': RollingBeta(),
