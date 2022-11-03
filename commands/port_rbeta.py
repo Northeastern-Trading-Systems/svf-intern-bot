@@ -9,7 +9,6 @@ Get a chart of the rolling beta of the portfolio.
 class RollingBeta:
 
     def __init__(self):
-        openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx', RISKFREERATE)
         pass
 
     def execute(self):

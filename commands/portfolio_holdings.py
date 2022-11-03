@@ -19,6 +19,8 @@ class Portfolio_Holdings:
         portfolio_dict = {'weight': weights, 'cost basis': cost_basis}
         self.portfolio_df = pd.DataFrame(portfolio_dict, index=tickers)
 
+        openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx', RISKFREERATE)
+
     def execute(self):
         result = f"```{tabulate(self.portfolio_df, headers='keys', tablefmt='pretty')}```"
         return result

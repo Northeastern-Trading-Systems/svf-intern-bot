@@ -9,7 +9,6 @@ Get a chart of the rolling vol of the portfolio.
 class RollingVolatility:
 
     def __init__(self):
-        openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx', RISKFREERATE)
         pass
 
     def execute(self):

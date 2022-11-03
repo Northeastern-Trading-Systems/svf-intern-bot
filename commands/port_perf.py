@@ -8,7 +8,6 @@ Get a table summary of portfolio performance metrics.
 class PortPerformance:
 
     def __init__(self):
-        openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx', RISKFREERATE)
         pass
 
     def execute(self):

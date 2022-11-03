@@ -9,7 +9,6 @@ Get a chart of the percentages of all holdings in the portfolio.
 class HoldP:
 
     def __init__(self):
-        openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx', RISKFREERATE)
         pass
 
     def execute(self):
