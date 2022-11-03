@@ -12,12 +12,10 @@ port
 class Portfolio_Holdings:
 
     def __init__(self):
-        tickers = ['NTDOY', 'EVVTY', 'MODG', 'CVLT', 'NSIT',
-                   'MAXR', 'MITK', 'TUP', 'WEB', 'OMI', 'GLXZ', 'USD']
-        weights = ['8.50%', '6.24%', '8.40%', '7.08%', '6.10%', '4.38%',
-                   '5.56%', '5.04%', '3.72%', '4.12%', '6.71%', '34.14%']
-        cost_basis = ['0.00', '0.00', '0.00', '0.00', '0.00',
-                      '0.00', '0.00', '0.00', '0.00', '0.00', '3.01', '0.00']
+        tickers = ['NTDOY', 'EVVTY', 'MODG', 'NSIT',
+                   'MAXR', 'USD']
+        weights = ['8.54%', '6.27%', '7.63%', '6.13%', '4.77%', '66.66%']
+        cost_basis = ['9.47', '215.24', '20.24', '108.16', '29.75', '1.00']
         portfolio_dict = {'weight': weights, 'cost basis': cost_basis}
         self.portfolio_df = pd.DataFrame(portfolio_dict, index=tickers)
 
