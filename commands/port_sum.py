@@ -1,5 +1,6 @@
 from openbb_terminal.api import openbb
 from tabulate import tabulate
+from constants import RISKFREERATE
 
 """
 Get a table summary of portfolio metrics.
@@ -7,7 +8,7 @@ Get a table summary of portfolio metrics.
 class PortSummary:
 
     def __init__(self):
-        openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx')
+        openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx', RISKFREERATE)
         pass
 
     def execute(self):

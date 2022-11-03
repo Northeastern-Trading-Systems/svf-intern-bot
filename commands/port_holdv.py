@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from openbb_terminal.api import openbb
 from uuid import uuid4
+from constants import RISKFREERATE
 
 """
 Get a chart of the values of all holdings in the portfolio.
@@ -8,7 +9,7 @@ Get a chart of the values of all holdings in the portfolio.
 class HoldV:
 
     def __init__(self):
-        openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx')
+        openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx', RISKFREERATE)
         pass
 
     def execute(self):
