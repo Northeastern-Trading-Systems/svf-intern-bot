@@ -5,7 +5,7 @@ from uuid import uuid4
 """
 Get a chart of the percentages of all holdings in the portfolio.
 """
-class HoldV:
+class HoldP:
 
     def __init__(self):
         openbb.portfolio.load('OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx')

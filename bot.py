@@ -32,6 +32,12 @@ from commands.shareholders import Shareholders
 from commands.analysis import Analysis
 from commands.candle import Candle
 from commands.filings import Filings
+from commands.port_holdp import HoldP
+from commands.port_holdv import HoldV
+from commands.port_perf import PortPerformance
+from commands.port_rbeta import RollingBeta
+from commands.port_rvol import RollingVolatility
+from commands.port_sum import PortSummary
 
 # denotes where path for the file is so we can load it
 env_path = Path('.') / 'env'
@@ -59,25 +65,38 @@ BOT_ID = client.api_call('auth.test')['user_id']  # obtains the id of the bot
 STORAGE OF KNOWN COMMANDS THAT CAN BE EXECUTED BY THE INTERN...
 """
 known_commands = {
+    # menu
     'menu': Menu(),
+    # general
     'quote': lambda arr: Quote(*arr),
+    'candle': lambda arr: Candle(*arr),
     'news': lambda arr: News(*arr),
     'ta': lambda arr: Technical_Analysis(*arr),
     'heatmap': Heatmap(),
+    'overview': lambda arr: Overview(*arr),
+    #fa
     'dcf': lambda arr: DCF(*arr),
     'insiders': lambda arr: Insiders(*arr),
-    'overview': lambda arr: Overview(*arr),
-    'er': lambda arr: ER_Info(*arr),
-    'analyst': lambda arr: Analyst_Recommendations(*arr),
-    'pt': lambda arr: Price_Target(*arr),
-    'port': Portfolio_Holdings(),
-    'fd': lambda arr: Fundamental_Data(*arr),
+    'filings': lambda arr: Filings(*arr),
+    'analysis': lambda arr: Analysis(*arr),
     'cf': lambda arr: Cash_Flow(*arr),
     'income': lambda arr: Income_Stmt(*arr),
+    'fd': lambda arr: Fundamental_Data(*arr),
+    # er
+    'er': lambda arr: ER_Info(*arr),
+    # street
+    'analyst': lambda arr: Analyst_Recommendations(*arr),
+    'pt': lambda arr: Price_Target(*arr),
+    # insiders
     'shrs': lambda arr: Shareholders(*arr),
-    'analysis': lambda arr: Analysis(*arr),
-    'candle': lambda arr: Candle(*arr),
-    'filings': lambda arr: Filings(*arr),
+    # port
+    'port': Portfolio_Holdings(),
+    'port-holdv': HoldV(),
+    'port-holdp': HoldP(),
+    'port-sum': PortSummary(),
+    'port-perf': PortPerformance(),
+    'port-rbeta': RollingBeta(),
+    'port-rvol': RollingVolatility(),
 }
 
 
