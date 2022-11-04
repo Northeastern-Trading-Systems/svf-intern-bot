@@ -8,7 +8,7 @@ from openbb_terminal.portfolio import portfolio_model as pm
 import yfinance as yf
 import matplotlib.pyplot as plt
 from uuid import uuid4
-
+from constants import PORTFOLIO
 
 class PortfolioHoldings:
     """
@@ -24,31 +24,13 @@ class PortfolioHoldings:
         """
 
         portfolio = pm.PortfolioModel(pmdf.load_portfolio(
-            'OpenBBTerminal/portfolio/holdings/Public_Equity_Orderbook.xlsx'))
+            'Public_Equity_Orderbook.xlsx'))
         rf_rate = yf.Ticker("^TNX").info["regularMarketPrice"]
         portfolio.set_risk_free_rate(float(rf_rate))
         portfolio.load_portfolio_historical_prices()
         portfolio.populate_historical_trade_data()
         portfolio.calculate_value()
-        self.portfolio = portfolio
+        PORTFOLIO = portfolio
 
     def execute(self):
         raise NotImplementedError()
-
-    class HoldP:
-        """
-        Holdings percentage command.
-        """
-
-        def execute(self):
-            try:
-                holdp = pm.get_holdings_percentage(self.portfolio)
-                plt.plot(holdp, labels=holdp.columns)
-                plt.legend()
-                plt.suptitle('Portfolio Holdings by Value')
-                path = f'/home/charles/OpenBBUserData/exports/portfolio/charts/hold-p-{uuid4()}.png'
-                plt.savefig(path, dpi=800)
-                return ("IMG", path)
-            except IndexError as e:
-                raise ValueError(
-                    "Error retrieving portfolio holdings percentages...")
