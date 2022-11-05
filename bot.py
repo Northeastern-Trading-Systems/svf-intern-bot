@@ -66,12 +66,16 @@ BOT_ID = client.api_call('auth.test')['user_id']  # obtains the id of the bot
 
 # init a portfolio on startup - passed to portfolio methods
 portfolio = pm.PortfolioModel(pmdf.load_portfolio(
-            'Public_Equity_Orderbook.xlsx'))
+    'Public_Equity_Orderbook.xlsx'))
 rf_rate = yf.Ticker("^TNX").info["regularMarketPrice"]
 portfolio.set_risk_free_rate(float(rf_rate))
 portfolio.load_portfolio_historical_prices()
 portfolio.populate_historical_trade_data()
 portfolio.calculate_value()
+portfolio.preprocess_orderbook()
+portfolio.load_benchmark()
+portfolio.mimic_trades_for_benchmark()
+portfolio.generate_portfolio_data()
 
 """
 STORAGE OF KNOWN COMMANDS THAT CAN BE EXECUTED BY THE INTERN...
