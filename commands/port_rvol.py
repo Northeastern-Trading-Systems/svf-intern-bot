@@ -26,7 +26,7 @@ class RollingVolatility:
             plt.rcParams["figure.dpi"] = 300
             path = f'/home/charles/OpenBBUserData/exports/portfolio/charts/rvol-{uuid4()}.png'
             fig = plt
-            fig.savefig(path, dpi=800)
+            fig.savefig(path, dpi=300, bbox_inches='tight')
             plt.clf()
             return ("IMG", path)
         except IndexError as e:
