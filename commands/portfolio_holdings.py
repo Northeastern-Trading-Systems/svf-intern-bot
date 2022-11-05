@@ -20,6 +20,7 @@ class PortfolioHoldings:
 
     def __init__(self):
         portfolio2 = pmdf.load_portfolio('Public_Equity_Orderbook.xlsx')
+        portfolio2 = portfolio2.drop(columns=['Type', 'Side', 'Currency', 'Industry', 'Country', 'Region', 'Fees', 'Premium'], axis=1)
         self.portfolio = portfolio2
 
     def execute(self):
