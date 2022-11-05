@@ -18,7 +18,6 @@ class RollingBeta:
         try:
             rbeta = pm.get_rolling_beta(self.portfolio, window="6m")
             plt.plot(rbeta, label='Ticker')
-            plt.legend(rbeta)
             plt.suptitle('Rolling Portfolio Beta')
             plt.xlabel('Date')
             plt.ylabel('Beta')

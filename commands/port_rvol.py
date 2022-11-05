@@ -18,7 +18,6 @@ class RollingVolatility:
         try:
             rvol = pm.get_rolling_volatility(self.portfolio, window="6m")
             plt.plot(rvol, label='Ticker')
-            plt.legend(rvol)
             plt.suptitle('Rolling Portfolio Volatility')
             plt.xlabel('Date')
             plt.ylabel('Vol')
