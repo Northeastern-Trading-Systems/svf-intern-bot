@@ -7,6 +7,8 @@ from openbb_terminal.portfolio import portfolio_model as pm
 """
 Get a chart of the rolling beta of the portfolio.
 """
+
+
 class RollingBeta:
 
     def __init__(self, portfolio):
@@ -25,6 +27,7 @@ class RollingBeta:
             path = f'/home/charles/OpenBBUserData/exports/portfolio/charts/rbeta-{uuid4()}.png'
             fig = plt
             fig.savefig(path, dpi=800)
+            plt.clf()
             return ("IMG", path)
         except IndexError as e:
             raise ValueError(
