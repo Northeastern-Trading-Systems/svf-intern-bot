@@ -13,7 +13,9 @@ class PortSummary:
 
     def execute(self):
         try:
-            summary = f"```{tabulate(pm.get_summary(self.portfolio, window='6m'), headers='keys', tablefmt='pretty')}```"
+            summary = pm.get_summary(self.portfolio, window='6m')
+            summary.round(2)
+            summary = f"```{tabulate(summary, headers='keys', tablefmt='pretty')}```"
             return summary
         except IndexError as e:
             raise ValueError(

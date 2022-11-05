@@ -17,6 +17,7 @@ class PortPerformance:
         try:
             perf = pm.get_performance_vs_benchmark(
                 self.portfolio, interval='ytd')
+            perf.round(2)
             perf = f"```{tabulate(perf, headers='keys', tablefmt='pretty')}```"
             return perf
         except IndexError as e:
