@@ -107,7 +107,7 @@ known_commands = {
     # insiders
     'shrs': lambda arr: Shareholders(*arr),
     # port
-    'port': PortfolioHoldings(portfolio),
+    'port': PortfolioHoldings(),
     'port-holdv': HoldV(portfolio),
     # follow this pattern to implement the subclasses of PortfolioHoldings
     'port-holdp': HoldP(portfolio),
