@@ -20,6 +20,7 @@ class RollingVolatility:
             plt.plot(rvol, label='Ticker')
             plt.suptitle('Rolling Portfolio Volatility')
             plt.xlabel('Date')
+            plt.xticks(rotation=45)
             plt.ylabel('Vol')
             plt.rcParams.update({'font.size': 9})
             plt.rcParams["figure.dpi"] = 300
