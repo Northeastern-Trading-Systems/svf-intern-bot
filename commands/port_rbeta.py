@@ -8,8 +8,8 @@ Get a chart of the rolling beta of the portfolio.
 """
 class RollingBeta:
 
-    def __init__(self):
-        pass
+    def __init__(self, portfolio):
+        self.portfolio = portfolio
 
     def execute(self):
         try:

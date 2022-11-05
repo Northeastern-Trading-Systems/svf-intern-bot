@@ -8,8 +8,8 @@ Get a chart of the rolling vol of the portfolio.
 """
 class RollingVolatility:
 
-    def __init__(self):
-        pass
+    def __init__(self, portfolio):
+        self.portfolio = portfolio
 
     def execute(self):
         try:

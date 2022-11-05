@@ -19,18 +19,13 @@ class PortfolioHoldings:
     """
 
     def __init__(self):
-        """
-        Construct an openBB portfolio object from the save location. 
-        """
-
-        portfolio = pm.PortfolioModel(pmdf.load_portfolio(
-            'Public_Equity_Orderbook.xlsx'))
-        rf_rate = yf.Ticker("^TNX").info["regularMarketPrice"]
-        portfolio.set_risk_free_rate(float(rf_rate))
-        portfolio.load_portfolio_historical_prices()
-        portfolio.populate_historical_trade_data()
-        portfolio.calculate_value()
-        PORTFOLIO = portfolio
+        portfolio2 = pmdf.load_portfolio('Public_Equity_Orderbook.xlsx')
+        self.portfolio = portfolio2
 
     def execute(self):
-        raise NotImplementedError()
+        try:
+            result = f"```{tabulate(self.portfolio, headers='keys', tablefmt='pretty')}```"
+            return result
+        except IndexError as e:
+            raise ValueError(
+                "Error retrieving portfolio holdings...")

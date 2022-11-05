@@ -7,8 +7,8 @@ Get a table summary of portfolio metrics.
 """
 class PortSummary:
 
-    def __init__(self):
-        pass
+    def __init__(self, portfolio):
+        self.portfolio = portfolio
 
     def execute(self):
         try:

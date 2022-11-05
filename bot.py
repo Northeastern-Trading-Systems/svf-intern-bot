@@ -11,6 +11,9 @@ from slackeventsapi import SlackEventAdapter
 from command import *
 import threading
 import requests
+from openbb_terminal.portfolio.portfolio_analysis import portfolio_model as pmdf
+from openbb_terminal.portfolio import portfolio_model as pm
+import yfinance as yf
 
 from commands.analyst_recommendations import Analyst_Recommendations
 from commands.cf import Cash_Flow
@@ -24,7 +27,6 @@ from commands.insiders import Insiders
 from commands.menu import Menu
 from commands.news import News
 from commands.overview import Overview
-from commands.portfolio_holdings import PortfolioHoldings
 from commands.price_target import Price_Target
 from commands.quote import Quote
 from commands.technical_analysis import Technical_Analysis
@@ -32,7 +34,13 @@ from commands.shareholders import Shareholders
 from commands.analysis import Analysis
 from commands.candle import Candle
 from commands.filings import Filings
-
+from commands.portfolio_holdings import PortfolioHoldings
+from commands.port_holdp import HoldP
+from commands.port_holdv import HoldV
+from commands.port_perf import PortPerformance
+from commands.port_rbeta import RollingBeta
+from commands.port_rvol import RollingVolatility
+from commands.port_sum import PortSummary
 
 # denotes where path for the file is so we can load it
 env_path = Path('.') / 'env'
@@ -56,10 +64,19 @@ Method echoes the string message that triggered the event.
 
 BOT_ID = client.api_call('auth.test')['user_id']  # obtains the id of the bot
 
+# init a portfolio on startup - passed to portfolio methods
+portfolio = pm.PortfolioModel(pmdf.load_portfolio(
+            'Public_Equity_Orderbook.xlsx'))
+rf_rate = yf.Ticker("^TNX").info["regularMarketPrice"]
+portfolio.set_risk_free_rate(float(rf_rate))
+portfolio.load_portfolio_historical_prices()
+portfolio.populate_historical_trade_data()
+portfolio.calculate_value()
+
 """
 STORAGE OF KNOWN COMMANDS THAT CAN BE EXECUTED BY THE INTERN...
 """
-portfolio = PortfolioHoldings()  # instantiate daily portfolio object
+
 known_commands = {
     # menu
     'menu': Menu(),
@@ -86,14 +103,14 @@ known_commands = {
     # insiders
     'shrs': lambda arr: Shareholders(*arr),
     # port
-    'port': portfolio,
-    'port-holdv': HoldV(),
+    'port': PortfolioHoldings(portfolio),
+    'port-holdv': HoldV(portfolio),
     # follow this pattern to implement the subclasses of PortfolioHoldings
-    'port-holdp': portfolio.HoldP(),
-    'port-sum': PortSummary(),
-    'port-perf': PortPerformance(),
-    'port-rbeta': RollingBeta(),
-    'port-rvol': RollingVolatility(),
+    'port-holdp': HoldP(portfolio),
+    'port-sum': PortSummary(portfolio),
+    'port-perf': PortPerformance(portfolio),
+    'port-rbeta': RollingBeta(portfolio),
+    'port-rvol': RollingVolatility(portfolio),
 }
 
 

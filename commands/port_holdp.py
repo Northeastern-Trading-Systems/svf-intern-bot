@@ -15,22 +15,25 @@ class HoldP:
     Holdings percentage command.
     """
 
-    def __init__(self):
-        self.portfolio = PORTFOLIO
-        self.portfolio.load_portfolio_historical_prices()
-        self.portfolio.populate_historical_trade_data()
-        self.portfolio.calculate_value()
+    def __init__(self, portfolio):
+        self.portfolio = portfolio
 
     def execute(self):
 
         try:
-            holdp = pm.get_holdings_percentage(PORTFOLIO)
-            plt.plot(holdp, labels=holdp.columns)
-            plt.legend()
+            holdp = pm.get_holdings_percentage(self.portfolio)
+            plt.plot(holdp, label='Ticker')
+            plt.legend(holdp)
             plt.suptitle('Portfolio Holdings by Percentage')
-            path = f'/home/charles/OpenBBUserData/exports/portfolio/charts/hold-p-{uuid4()}.png'
-            plt.savefig(path, dpi=800)
+            plt.xlabel('Date')
+            plt.ylabel('Percentage of Portfolio')
+            plt.rcParams.update({'font.size': 9})
+            plt.rcParams["figure.dpi"] = 300
+            path = f'/home/charles/OpenBBUserData/exports/portfolio/charts/{holdp}-{uuid4()}.png'
+            fig = plt
+            fig.savefig(path, dpi=800)
             return ("IMG", path)
+
         except IndexError as e:
             raise ValueError(
                 "Error retrieving portfolio holdings percentages...")
