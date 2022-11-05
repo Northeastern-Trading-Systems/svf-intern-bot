@@ -22,7 +22,7 @@ class HoldV:
             plt.ylabel('Value of Holding')
             plt.rcParams.update({'font.size': 9})
             plt.rcParams["figure.dpi"] = 300
-            path = f'/home/charles/OpenBBUserData/exports/portfolio/charts/{holdv}-{uuid4()}.png'
+            path = f'/home/charles/OpenBBUserData/exports/portfolio/charts/holdv-{uuid4()}.png'
             fig = plt
             fig.savefig(path, dpi=800)
             return ("IMG", path)
