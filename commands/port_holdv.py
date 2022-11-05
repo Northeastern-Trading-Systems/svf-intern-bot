@@ -7,6 +7,8 @@ from openbb_terminal.portfolio import portfolio_model as pm
 """
 Get a chart of the values of all holdings in the portfolio.
 """
+
+
 class HoldV:
 
     def __init__(self, portfolio):
@@ -25,6 +27,7 @@ class HoldV:
             path = f'/home/charles/OpenBBUserData/exports/portfolio/charts/holdv-{uuid4()}.png'
             fig = plt
             fig.savefig(path, dpi=800)
+            plt.clf()
             return ("IMG", path)
         except IndexError as e:
             raise ValueError(

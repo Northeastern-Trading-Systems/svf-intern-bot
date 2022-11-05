@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from uuid import uuid4
 from constants import PORTFOLIO
 
+
 class HoldP:
     """
     Holdings percentage command.
@@ -30,8 +31,8 @@ class HoldP:
             plt.rcParams.update({'font.size': 9})
             plt.rcParams["figure.dpi"] = 300
             path = f'/home/charles/OpenBBUserData/exports/portfolio/charts/holdp-{uuid4()}.png'
-            fig = plt
-            fig.savefig(path, dpi=800)
+            plt.savefig(path, dpi=800)
+            plt.clf()
             return ("IMG", path)
 
         except IndexError as e:
